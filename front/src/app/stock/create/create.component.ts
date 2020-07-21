@@ -8,10 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
   f = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(20),
-    ]),
+    name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
     price: new FormControl(1.0, Validators.required),
     qty: new FormControl(100, Validators.required),
   });
@@ -19,4 +16,8 @@ export class CreateComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  submit(): void {
+    console.log('submit');
+  }
 }
