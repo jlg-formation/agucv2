@@ -3,7 +3,12 @@
   <form [formGroup]="f">
     <label>
       <div>Nom</div>
-      <input type="text" formControlName="name" placeholder="Ex: Tournevis" appAutofocus />
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Ex: Tournevis"
+        appAutofocus
+      />
       <div class="error">
         <ng-container *ngIf="f.controls['name'].touched">
           <span *ngIf="f.controls['name'].errors?.required">
