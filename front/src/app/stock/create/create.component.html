@@ -1,1 +1,25 @@
-<p>create works!</p>
+<main>
+  <h1>Ajouter un article</h1>
+  <form [formGroup]="f">
+    <label>
+      <div>Nom</div>
+      <input type="text" formControlName="name" />
+      <div class="error">
+        <span hidden>Oups... champs requis</span>
+        <span hidden>Oups... champs trop long</span>
+      </div>
+    </label>
+    <label>
+      <div>Prix</div>
+      <input type="number" min="0" step="0.01" formControlName="price" />
+      <div class="error"></div>
+    </label>
+    <label>
+      <div>Quantité</div>
+      <input type="number" min="0" formControlName="qty" />
+      <div class="error"></div>
+    </label>
+    <button class="primary">Créer</button>
+  </form>
+</main>
+<!-- {{ f.value | json }} -->
