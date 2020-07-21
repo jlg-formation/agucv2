@@ -1,1 +1,28 @@
-<p>stock works!</p>
+<main>
+  <h1>Liste des articles</h1>
+  <div class="table">
+    <nav>
+      <button>Rafraichir</button>
+      <button routerLink="create">Ajouter</button>
+    </nav>
+    <table>
+      <caption hidden>
+        Liste des articles
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" name="name">Nom</th>
+          <th scope="col" name="price">Prix</th>
+          <th scope="col" name="qty">Quantité</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of articles$ | async">
+          <td name="name">Nom</td>
+          <td name="price">Prix</td>
+          <td name="qty">Quantité</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
