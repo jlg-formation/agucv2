@@ -3,10 +3,20 @@
   <form [formGroup]="f">
     <label>
       <div>Nom</div>
-      <input type="text" formControlName="name" />
+      <input type="text" formControlName="name" placeholder="Ex: Tournevis" />
       <div class="error">
-        <span hidden>Oups... champs requis</span>
-        <span hidden>Oups... champs trop long</span>
+        <ng-container *ngIf="f.controls['name'].touched">
+          <span *ngIf="f.controls['name'].errors?.required">
+            Oups... champs requis
+          </span>
+          <span *ngIf="f.controls['name'].errors?.maxlength">
+            Oups... champs trop long ({{
+              f.controls["name"].errors?.maxlength.actualLength
+            }}
+            &gt;
+            {{ f.controls["name"].errors?.maxlength.requiredLength }})
+          </span>
+        </ng-container>
       </div>
     </label>
     <label>
@@ -19,7 +29,7 @@
       <input type="number" min="0" formControlName="qty" />
       <div class="error"></div>
     </label>
-    <button class="primary">Créer</button>
+    <button [disabled]="f.invalid" class="primary">Créer</button>
   </form>
 </main>
-<!-- {{ f.value | json }} -->
+{{ f.controls["name"].errors | json }}
