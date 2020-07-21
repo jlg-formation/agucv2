@@ -3,7 +3,7 @@
   <form [formGroup]="f">
     <label>
       <div>Nom</div>
-      <input type="text" formControlName="name" placeholder="Ex: Tournevis" />
+      <input type="text" formControlName="name" placeholder="Ex: Tournevis" appAutofocus />
       <div class="error">
         <ng-container *ngIf="f.controls['name'].touched">
           <span *ngIf="f.controls['name'].errors?.required">
@@ -32,4 +32,4 @@
     <button [disabled]="f.invalid" class="primary">Créer</button>
   </form>
 </main>
-{{ f.controls["name"].errors | json }}
+<!-- {{ f.controls["name"].errors | json }} -->
