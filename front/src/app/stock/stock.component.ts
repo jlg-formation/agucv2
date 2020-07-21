@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Article } from 'src/app/interfaces/article';
+import { ArticleService } from 'src/app/services/article.service';
 
 @Component({
   selector: 'app-stock',
@@ -8,14 +7,7 @@ import { Article } from 'src/app/interfaces/article';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent implements OnInit {
-  articles$ = new BehaviorSubject<Article[]>([
-    { name: 'Tournevis', price: 3.99, qty: 100 },
-    { name: 'Tournevis', price: 3.99, qty: 100 },
-    { name: 'Tournevis', price: 3.99, qty: 100 },
-    { name: 'Tournevis', price: 3.99, qty: 100 },
-  ]);
-
-  constructor() {}
+  constructor(public articleService: ArticleService) {}
 
   ngOnInit(): void {}
 }

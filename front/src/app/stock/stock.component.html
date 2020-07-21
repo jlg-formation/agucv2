@@ -17,10 +17,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let a of articles$ | async">
-          <td name="name">Nom</td>
-          <td name="price">Prix</td>
-          <td name="qty">Quantité</td>
+        <tr *ngFor="let a of articleService.articles$ | async">
+          <td name="name">{{ a.name }}</td>
+          <td name="price">{{ a.price }}</td>
+          <td name="qty">{{ a.qty }}</td>
         </tr>
       </tbody>
     </table>
