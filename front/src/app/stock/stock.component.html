@@ -18,7 +18,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let a of articleService.articles$ | async">
-          <td name="name">{{ a.name }}</td>
+          <td name="name" [title]="a.name">{{ a.name | ellipsis: 11 }}</td>
           <td name="price">{{ a.price }}</td>
           <td name="qty">{{ a.qty }}</td>
         </tr>

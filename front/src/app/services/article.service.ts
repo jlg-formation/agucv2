@@ -9,9 +9,9 @@ import { Article } from '../interfaces/article';
 export class ArticleService {
   articles$ = new BehaviorSubject<Article[]>([
     { name: 'Tournevis', price: 3.99, qty: 100 },
-    { name: 'Tournevis', price: 3.99, qty: 100 },
-    { name: 'Tournevis', price: 3.99, qty: 100 },
-    { name: 'Tournevis', price: 3.99, qty: 100 },
+    { name: 'Tournevis cruciforme', price: 3.99, qty: 100 },
+    { name: 'Pince', price: 3.99, qty: 100 },
+    { name: 'Scie', price: 3.99, qty: 100 },
   ]);
 
   constructor() {
