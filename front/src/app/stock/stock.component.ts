@@ -34,4 +34,9 @@ export class StockComponent implements OnInit {
     this.articleService.remove(this.selectedArticles);
     this.selectedArticles.length = 0;
   }
+
+  refresh(): void {
+    console.log('refresh');
+    this.articleService.refresh();
+  }
 }

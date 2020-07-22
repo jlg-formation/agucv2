@@ -19,15 +19,9 @@ export class ArticleService {
   }
 
   getArticles(): Article[] {
-    const defaultArticles = [
-      { name: 'Tournevis', price: 4.99, qty: 100 },
-      { name: 'Tournevis cruciforme', price: 3.99, qty: 12 },
-      { name: 'Pince', price: 2, qty: 10 },
-      { name: 'Scie', price: 3.99, qty: 120 },
-    ];
     const str = localStorage.getItem('articles');
     if (!str) {
-      return defaultArticles;
+      return [];
     }
     return JSON.parse(str);
   }
@@ -40,5 +34,9 @@ export class ArticleService {
     this.articles$.next(
       this.articles$.value.filter((a) => !selectedArticles.includes(a))
     );
+  }
+
+  refresh(): void {
+    this.articles$.next(this.getArticles());
   }
 }
