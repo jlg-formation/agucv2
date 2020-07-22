@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 
 import { Article } from '../interfaces/article';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  articles: Article[] = this.getArticles();
+  articles$ = new BehaviorSubject<Article[]>(this.getArticles());
 
   constructor() {
     console.log('article service instantiated');
+
+    // quand je touche la liste d'article, je met a jour le localstorage.
+    this.articles$.subscribe((articles) => {
+      localStorage.setItem('articles', JSON.stringify(articles));
+    });
   }
 
   getArticles(): Article[] {
@@ -26,12 +32,13 @@ export class ArticleService {
     return JSON.parse(str);
   }
 
-  save(): void {
-    localStorage.setItem('articles', JSON.stringify(this.articles));
+  add(article: Article): void {
+    this.articles$.next([...this.articles$.value, article]);
   }
 
-  add(article: Article): void {
-    this.articles.push(article);
-    this.save();
+  remove(selectedArticles: Article[]): void {
+    this.articles$.next(
+      this.articles$.value.filter((a) => !selectedArticles.includes(a))
+    );
   }
 }

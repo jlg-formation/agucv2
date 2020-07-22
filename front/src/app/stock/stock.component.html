@@ -4,7 +4,7 @@
     <nav>
       <button><fa-icon [icon]="faRedo"></fa-icon></button>
       <button routerLink="create"><fa-icon [icon]="faPlus"></fa-icon></button>
-      <button [hidden]="selectedArticles.length === 0">
+      <button (click)="remove()" [hidden]="selectedArticles.length === 0">
         <fa-icon [icon]="faTrashAlt"></fa-icon>
       </button>
     </nav>
@@ -22,7 +22,7 @@
       <tbody>
         <tr
           (click)="toggle(a)"
-          *ngFor="let a of articleService.articles"
+          *ngFor="let a of articleService.articles$ | async"
           [class.selected]="selectedArticles.includes(a)"
         >
           <td class="name" [title]="a.name">{{ a.name | ellipsis: 11 }}</td>
