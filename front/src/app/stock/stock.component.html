@@ -2,8 +2,8 @@
   <h1>Liste des articles</h1>
   <div class="table">
     <nav>
-      <button>Rafraichir</button>
-      <button routerLink="create">Ajouter</button>
+      <button><fa-icon [icon]="faRedo"></fa-icon></button>
+      <button routerLink="create"><fa-icon [icon]="faPlus"></fa-icon></button>
     </nav>
     <table>
       <caption hidden>
@@ -11,16 +11,16 @@
       </caption>
       <thead>
         <tr>
-          <th scope="col" name="name">Nom</th>
-          <th scope="col" name="price">Prix</th>
-          <th scope="col" name="qty">Quantité</th>
+          <th scope="col" class="name">Nom</th>
+          <th scope="col" class="price">Prix</th>
+          <th scope="col" class="qty">Quantité</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let a of articleService.articles">
-          <td name="name" [title]="a.name">{{ a.name | ellipsis: 11 }}</td>
-          <td name="price">{{ a.price }}</td>
-          <td name="qty">{{ a.qty }}</td>
+          <td class="name" [title]="a.name">{{ a.name | ellipsis: 11 }}</td>
+          <td class="price">{{ a.price | currency }}</td>
+          <td class="qty">{{ a.qty }}</td>
         </tr>
       </tbody>
     </table>
