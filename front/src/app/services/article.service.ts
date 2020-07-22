@@ -7,12 +7,12 @@ import { Article } from '../interfaces/article';
   providedIn: 'root',
 })
 export class ArticleService {
-  articles$ = new BehaviorSubject<Article[]>([
+  articles: Article[] = [
     { name: 'Tournevis', price: 3.99, qty: 100 },
     { name: 'Tournevis cruciforme', price: 3.99, qty: 100 },
     { name: 'Pince', price: 3.99, qty: 100 },
     { name: 'Scie', price: 3.99, qty: 100 },
-  ]);
+  ];
 
   constructor() {
     console.log('article service instantiated');
