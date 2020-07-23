@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "^6.6.0"
+    "@types/node": "^14.0.24",
+    "rxjs": "^6.6.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   }
 }
