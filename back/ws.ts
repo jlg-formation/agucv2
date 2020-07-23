@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { promises as fs } from "fs";
 import { BehaviorSubject, timer } from "rxjs";
-import { debounce } from "rxjs/operators";
+import { debounce, debounceTime } from "rxjs/operators";
 
 import { Article } from "../front/src/app/interfaces/article";
 const app = express.Router();
@@ -21,7 +21,8 @@ init();
 // ecrire dans le fichier que apres 2 secondes d'inactivite.
 articles$
   // .pipe(switchMap((articles) => of(articles).pipe(delay(2000))))
-  .pipe(debounce(() => timer(2000)))
+  // .pipe(debounce(() => timer(2000)))
+  .pipe(debounceTime(2000))
   .subscribe((articles) => {
     fs.writeFile(filename, JSON.stringify(articles, undefined, 2));
   });
