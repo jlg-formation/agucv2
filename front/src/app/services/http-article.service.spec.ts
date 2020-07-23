@@ -50,6 +50,16 @@ describe('HttpArticleService', () => {
     service.add(a1);
     const req = http.expectOne(url);
     expect(req.request.method).toEqual('POST');
+    req.flush([], { status: 500, statusText: 'Internal Error' });
+    http.expectOne(url).flush([]);
+    expect(service).toBeTruthy();
+  });
+
+  it('should add with error', () => {
+    http.expectOne(url).flush([]);
+    service.add(a1);
+    const req = http.expectOne(url);
+    expect(req.request.method).toEqual('POST');
     req.flush([], { status: 201, statusText: 'Created' });
     http.expectOne(url).flush([]);
     expect(service).toBeTruthy();
@@ -57,10 +67,20 @@ describe('HttpArticleService', () => {
 
   it('should remove', () => {
     http.expectOne(url).flush([]);
-    service.remove([]);
+    service.remove([a1]);
     const req = http.expectOne(url);
     expect(req.request.method).toEqual('DELETE');
     req.flush([], { status: 201, statusText: 'Created' });
+    http.expectOne(url).flush([]);
+    expect(service).toBeTruthy();
+  });
+
+  it('should remove', () => {
+    http.expectOne(url).flush([]);
+    service.remove([a1]);
+    const req = http.expectOne(url);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush([], { status: 500, statusText: 'Internal Error' });
     http.expectOne(url).flush([]);
     expect(service).toBeTruthy();
   });
