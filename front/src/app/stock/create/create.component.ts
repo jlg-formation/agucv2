@@ -31,6 +31,8 @@ export class CreateComponent implements OnInit {
     console.log('submit');
     const article: Article = this.f.value as Article;
     this.articleService.add(article);
-    this.router.navigate(['..'], { relativeTo: this.route });
+    // this.router.navigate(['..'], { relativeTo: this.route });
+    this.router.navigate(['stock']);
+    // this.router.navigateByUrl('/stock');
   }
 }
