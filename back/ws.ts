@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { promises as fs } from "fs";
-import { BehaviorSubject, timer, of } from "rxjs";
-import { switchMap, map, delay, debounce } from "rxjs/operators";
+import { BehaviorSubject, timer } from "rxjs";
+import { debounce } from "rxjs/operators";
 
 import { Article } from "../front/src/app/interfaces/article";
 const app = express.Router();
