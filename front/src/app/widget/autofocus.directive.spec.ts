@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-test',
-  template: '<input type="text" appAutofocus>',
+  template: '<input type="text" ><input type="password" appAutofocus>',
 })
 export class TestComponent {}
 
@@ -28,7 +28,7 @@ describe('AutofocusDirective', () => {
   it('should focus on the element where appAutofocus is applied', () => {
     const actualAutofocus = document.activeElement;
     const compiled: HTMLElement = fixture.nativeElement;
-    const expectedAutofocus = compiled.querySelector('input');
+    const expectedAutofocus = compiled.querySelector('input[type="password"]');
     expect(actualAutofocus).toBe(expectedAutofocus);
   });
 });
