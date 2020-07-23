@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { faRedo, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { ArticleService } from 'src/app/services/article.service';
 import { Article } from '../interfaces/article';
+import { interval, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -16,7 +17,20 @@ export class StockComponent implements OnInit {
 
   selectedArticles = [] as Article[];
 
-  constructor(public articleService: ArticleService) {}
+  counter = 0;
+
+  constructor(
+    public articleService: ArticleService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.ngZone.runOutsideAngular(() => {
+      interval(1000).subscribe((n) => {
+        this.counter = n;
+        cdr.detectChanges();
+      });
+    });
+  }
 
   ngOnInit(): void {}
 
