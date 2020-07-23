@@ -24,12 +24,12 @@ export class StockComponent implements OnInit {
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {
-    this.ngZone.runOutsideAngular(() => {
-      interval(1000).subscribe((n) => {
-        this.counter = n;
-        cdr.detectChanges();
-      });
-    });
+    // this.ngZone.runOutsideAngular(() => {
+    //   interval(1000).subscribe((n) => {
+    //     this.counter = n;
+    //     cdr.detectChanges();
+    //   });
+    // });
   }
 
   ngOnInit(): void {}
