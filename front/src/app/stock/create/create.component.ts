@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from 'src/app/services/article.service';
 import { Article } from 'src/app/interfaces/article';
+import { stockRoute } from 'src/app/misc/routes';
 
 @Component({
   selector: 'app-create',
@@ -32,7 +33,7 @@ export class CreateComponent implements OnInit {
     const article: Article = this.f.value as Article;
     this.articleService.add(article);
     // this.router.navigate(['..'], { relativeTo: this.route });
-    this.router.navigate(['stock']);
+    this.router.navigate([stockRoute]);
     // this.router.navigateByUrl('/stock');
   }
 }
