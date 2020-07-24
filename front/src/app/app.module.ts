@@ -15,6 +15,8 @@ import { HttpArticleService } from './services/http-article.service';
 import { HttpClientModule } from '@angular/common/http';
 import { reducers, metaReducers } from './reducers';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { ArticleEffects } from './effects/article.effects';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LegalComponent],
@@ -32,6 +34,7 @@ import { environment } from '../environments/environment';
       },
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([ArticleEffects]),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },
