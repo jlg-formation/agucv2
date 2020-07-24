@@ -11,7 +11,7 @@ import {
   selectArticleError,
   selectArticleLoading,
 } from '../reducers';
-import { loadArticles } from '../actions/article.actions';
+import { loadArticles, removeArticle } from '../actions/article.actions';
 
 @Component({
   selector: 'app-stock',
@@ -54,6 +54,9 @@ export class StockComponent implements OnInit {
   remove(): void {
     console.log('remove');
     // this.articleService.remove(this.selectedArticles);
+    this.store.dispatch(
+      removeArticle({ data: this.selectedArticles.map((a) => a.id as string) })
+    );
     this.selectedArticles.length = 0;
   }
 

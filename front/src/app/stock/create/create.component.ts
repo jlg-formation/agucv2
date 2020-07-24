@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 import { ArticleService } from 'src/app/services/article.service';
 import { Article } from 'src/app/interfaces/article';
 import { stockRoute } from 'src/app/misc/routes';
+import { AppState } from 'src/app/reducers';
+import { addArticle } from 'src/app/actions/article.actions';
 
 @Component({
   selector: 'app-create',
@@ -23,7 +27,8 @@ export class CreateComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {}
@@ -31,9 +36,9 @@ export class CreateComponent implements OnInit {
   submit(): void {
     console.log('submit');
     const article: Article = this.f.value as Article;
-    this.articleService.add(article);
+    this.store.dispatch(addArticle({ data: article }));
     // this.router.navigate(['..'], { relativeTo: this.route });
     this.router.navigate([stockRoute]);
-    // this.router.navigateByUrl('/stock');
+    // this.router.navigateByUrl(stockRoute);
   }
 }

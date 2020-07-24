@@ -11,6 +11,12 @@ import {
   loadArticles,
   loadArticlesFailure,
   loadArticlesSuccess,
+  addArticle,
+  addArticleSuccess,
+  addArticleFailure,
+  removeArticle,
+  removeArticleFailure,
+  removeArticleSuccess,
 } from '../actions/article.actions';
 import { environment } from '../../environments/environment';
 import { Article } from '../interfaces/article';
@@ -29,18 +35,41 @@ const initialArticleState: ArticleState = {
 
 const articleReducer = createReducer(
   initialArticleState,
-  on(loadArticles, (state) => {
-    console.log('load article start');
-    return { ...state, error: '', loading: true };
+  on(loadArticles, addArticle, removeArticle, (state, props) => {
+    console.log(props.type);
+    return {
+      ...state,
+      error: '',
+      loading: true,
+    };
   }),
-  on(loadArticlesFailure, (state, props) => {
-    console.log('load article failure', props.error);
-    return { ...state, error: 'oh zut... erreur technique ;)', loading: false };
-  }),
-  on(loadArticlesSuccess, (state, props) => {
-    console.log('load article success', props.data);
-    return { ...state, collection: props.data, error: '', loading: false };
-  })
+  on(
+    loadArticlesFailure,
+    addArticleFailure,
+    removeArticleFailure,
+    (state, props) => {
+      console.log(props.type);
+      return {
+        ...state,
+        error: 'oh zut... erreur technique ;)',
+        loading: false,
+      };
+    }
+  ),
+  on(
+    loadArticlesSuccess,
+    addArticleSuccess,
+    removeArticleSuccess,
+    (state, props) => {
+      console.log(props.type);
+      return {
+        ...state,
+        collection: props.data,
+        error: '',
+        loading: false,
+      };
+    }
+  )
 );
 
 export interface AppState {
