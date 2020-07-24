@@ -12,10 +12,12 @@ import {
   removeArticleFailure,
 } from '../actions/article.actions';
 import { timer, EMPTY, of } from 'rxjs';
-import { mergeMap, map, catchError, delay } from 'rxjs/operators';
+import { mergeMap, map, catchError, delay, tap } from 'rxjs/operators';
 import { ofType } from '@ngrx/effects';
 import { ResourceArticleService } from '../services/resource-article.service';
 import { Article } from '../interfaces/article';
+import { AppState, selectArticle } from '../reducers';
+import { Store, select } from '@ngrx/store';
 
 @Injectable()
 export class ArticleEffects {
@@ -44,7 +46,7 @@ export class ArticleEffects {
 
   addArticle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string, data: Article }>(ArticleActionType.ADD),
+      ofType<{ type: string; data: Article }>(ArticleActionType.ADD),
       delay(2000),
       mergeMap((action) =>
         this.resourceArticle.add(action.data).pipe(
@@ -67,7 +69,7 @@ export class ArticleEffects {
 
   removeArticle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string, data: string[] }>(ArticleActionType.REMOVE),
+      ofType<{ type: string; data: string[] }>(ArticleActionType.REMOVE),
       delay(2000),
       mergeMap((action) =>
         this.resourceArticle.remove(action.data).pipe(
@@ -88,8 +90,25 @@ export class ArticleEffects {
     )
   );
 
+  log$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        tap((action) => {
+          console.log('perform action: ', action.type);
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
   constructor(
     private actions$: Actions,
-    private resourceArticle: ResourceArticleService
-  ) {}
+    private resourceArticle: ResourceArticleService,
+    private store: Store<AppState>
+  ) {
+    this.store.pipe(select(selectArticle)).subscribe((articles) => {
+      localStorage.setItem('articles', JSON.stringify(articles));
+    });
+  }
 }

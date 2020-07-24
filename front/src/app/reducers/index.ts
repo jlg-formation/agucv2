@@ -21,7 +21,6 @@ import {
 } from '../actions/article.actions';
 import { environment } from '../../environments/environment';
 import { Article } from '../interfaces/article';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface ArticleState {
   collection: Article[];
@@ -36,10 +35,6 @@ const getArticles = (): Article[] => {
     return [];
   }
   return JSON.parse(str);
-};
-
-const saveArticles = (articles: Article[]) => {
-  localStorage.setItem('articles', JSON.stringify(articles));
 };
 
 const initialArticleState: ArticleState = {
@@ -60,7 +55,6 @@ const articleReducer = createReducer(
     if (props.type === ArticleActionType.REMOVE) {
       articles = articles.filter((a) => !props.data.includes(a.id as string));
     }
-    saveArticles(articles);
     return {
       ...state,
       error: '',
@@ -75,7 +69,6 @@ const articleReducer = createReducer(
     removeArticleFailure,
     (state, props) => {
       console.log(props.type);
-      saveArticles(state.collectionBefore);
       return {
         ...state,
         error: 'oh zut... erreur technique ;)',
@@ -90,7 +83,6 @@ const articleReducer = createReducer(
     removeArticleSuccess,
     (state, props) => {
       console.log(props.type);
-      saveArticles(props.data);
       return {
         ...state,
         collection: props.data,
