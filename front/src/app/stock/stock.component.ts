@@ -6,6 +6,7 @@ import { ArticleService } from 'src/app/services/article.service';
 import { Article } from '../interfaces/article';
 import { interval, Observable, of } from 'rxjs';
 import { AppState, selectArticle } from '../reducers';
+import { loadArticles } from '../actions/article.actions';
 
 @Component({
   selector: 'app-stock',
@@ -18,15 +19,15 @@ export class StockComponent implements OnInit {
   faTrashAlt = faTrashAlt;
 
   selectedArticles = [] as Article[];
-  articles$: Observable<Article[]>;
+  articles$ = this.store.pipe(select(selectArticle));
 
   counter = 0;
 
-  constructor(private store: Store<AppState>) {
-    this.articles$ = this.store.pipe(select(selectArticle));
-  }
+  constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(loadArticles());
+  }
 
   toggle(article: Article): void {
     if (this.selectedArticles.includes(article)) {
@@ -45,6 +46,6 @@ export class StockComponent implements OnInit {
 
   refresh(): void {
     console.log('refresh');
-    // this.articleService.refresh();
+    this.store.dispatch(loadArticles());
   }
 }
