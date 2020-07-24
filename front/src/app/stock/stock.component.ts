@@ -1,9 +1,11 @@
 import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { faRedo, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Store, select } from '@ngrx/store';
 
 import { ArticleService } from 'src/app/services/article.service';
 import { Article } from '../interfaces/article';
 import { interval, Observable, of } from 'rxjs';
+import { AppState, selectArticle } from '../reducers';
 
 @Component({
   selector: 'app-stock',
@@ -16,10 +18,13 @@ export class StockComponent implements OnInit {
   faTrashAlt = faTrashAlt;
 
   selectedArticles = [] as Article[];
+  articles$: Observable<Article[]>;
 
   counter = 0;
 
-  constructor(public articleService: ArticleService) {}
+  constructor(private store: Store<AppState>) {
+    this.articles$ = this.store.pipe(select(selectArticle));
+  }
 
   ngOnInit(): void {}
 
@@ -34,12 +39,12 @@ export class StockComponent implements OnInit {
 
   remove(): void {
     console.log('remove');
-    this.articleService.remove(this.selectedArticles);
+    // this.articleService.remove(this.selectedArticles);
     this.selectedArticles.length = 0;
   }
 
   refresh(): void {
     console.log('refresh');
-    this.articleService.refresh();
+    // this.articleService.refresh();
   }
 }
