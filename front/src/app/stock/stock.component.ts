@@ -38,9 +38,7 @@ export class StockComponent implements OnInit {
       .subscribe((loading) => (this.loading = loading));
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(loadArticles());
-  }
+  ngOnInit(): void {}
 
   toggle(article: Article): void {
     if (this.selectedArticles.includes(article)) {

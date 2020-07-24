@@ -18,6 +18,8 @@ import { ResourceArticleService } from '../services/resource-article.service';
 import { Article } from '../interfaces/article';
 import { AppState, selectArticle } from '../reducers';
 import { Store, select } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { stockRoute } from '../misc/routes';
 
 @Injectable()
 export class ArticleEffects {
@@ -50,11 +52,12 @@ export class ArticleEffects {
       delay(2000),
       mergeMap((action) =>
         this.resourceArticle.add(action.data).pipe(
-          map((articles) =>
-            addArticleSuccess({
+          map((articles) => {
+            this.router.navigate([stockRoute]);
+            return addArticleSuccess({
               data: articles,
-            })
-          ),
+            });
+          }),
           catchError((err) =>
             of(
               addArticleFailure({
@@ -105,10 +108,15 @@ export class ArticleEffects {
   constructor(
     private actions$: Actions,
     private resourceArticle: ResourceArticleService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {
     this.store.pipe(select(selectArticle)).subscribe((articles) => {
       localStorage.setItem('articles', JSON.stringify(articles));
     });
+
+    setTimeout(() => {
+      this.store.dispatch(loadArticles());
+    }, 0);
   }
 }
