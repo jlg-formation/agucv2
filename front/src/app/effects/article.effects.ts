@@ -8,6 +8,8 @@ import {
   ArticleActionType,
   addArticleSuccess,
   addArticleFailure,
+  removeArticleSuccess,
+  removeArticleFailure,
 } from '../actions/article.actions';
 import { timer, EMPTY, of } from 'rxjs';
 import { mergeMap, map, catchError, delay } from 'rxjs/operators';
@@ -42,9 +44,9 @@ export class ArticleEffects {
 
   addArticle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ArticleActionType.ADD),
+      ofType<{ type: string, data: Article }>(ArticleActionType.ADD),
       delay(2000),
-      mergeMap((action: { type: string, data: Article }) =>
+      mergeMap((action) =>
         this.resourceArticle.add(action.data).pipe(
           map((articles) =>
             addArticleSuccess({
@@ -54,6 +56,29 @@ export class ArticleEffects {
           catchError((err) =>
             of(
               addArticleFailure({
+                error: err,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  removeArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<{ type: string, data: string[] }>(ArticleActionType.REMOVE),
+      delay(2000),
+      mergeMap((action) =>
+        this.resourceArticle.remove(action.data).pipe(
+          map((articles) =>
+            removeArticleSuccess({
+              data: articles,
+            })
+          ),
+          catchError((err) =>
+            of(
+              removeArticleFailure({
                 error: err,
               })
             )
