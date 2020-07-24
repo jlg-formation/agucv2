@@ -5,7 +5,12 @@ import { Store, select } from '@ngrx/store';
 import { ArticleService } from 'src/app/services/article.service';
 import { Article } from '../interfaces/article';
 import { interval, Observable, of } from 'rxjs';
-import { AppState, selectArticle } from '../reducers';
+import {
+  AppState,
+  selectArticle,
+  selectArticleError,
+  selectArticleLoading,
+} from '../reducers';
 import { loadArticles } from '../actions/article.actions';
 
 @Component({
@@ -21,9 +26,17 @@ export class StockComponent implements OnInit {
   selectedArticles = [] as Article[];
   articles$ = this.store.pipe(select(selectArticle));
 
-  counter = 0;
+  error = '';
+  loading = false;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {
+    this.store
+      .pipe(select(selectArticleError))
+      .subscribe((err) => (this.error = err));
+    this.store
+      .pipe(select(selectArticleLoading))
+      .subscribe((loading) => (this.loading = loading));
+  }
 
   ngOnInit(): void {
     this.store.dispatch(loadArticles());

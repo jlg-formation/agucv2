@@ -2,7 +2,9 @@
   <h1>Liste des articles</h1>
   <div class="table">
     <nav>
-      <button (click)="refresh()"><fa-icon [icon]="faRedo"></fa-icon></button>
+      <button (click)="refresh()">
+        <fa-icon [icon]="faRedo" [spin]="loading"></fa-icon>
+      </button>
       <button routerLink="create" class="add">
         <fa-icon [icon]="faPlus"></fa-icon>
       </button>
@@ -33,5 +35,6 @@
         </tr>
       </tbody>
     </table>
+    <div *ngIf="error !== ''" class="error">{{ error }}</div>
   </div>
 </main>

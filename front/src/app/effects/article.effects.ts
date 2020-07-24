@@ -15,9 +15,9 @@ export class ArticleEffects {
   loadArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadArticles().type),
+      delay(2000),
       mergeMap(() =>
         this.resourceArticle.retrieveAll().pipe(
-          delay(2000),
           map((articles) =>
             loadArticlesSuccess({
               data: articles,
