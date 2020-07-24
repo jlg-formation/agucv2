@@ -19,18 +19,7 @@ export class StockComponent implements OnInit {
 
   counter = 0;
 
-  constructor(
-    public articleService: ArticleService,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
-  ) {
-    // this.ngZone.runOutsideAngular(() => {
-    //   interval(1000).subscribe((n) => {
-    //     this.counter = n;
-    //     cdr.detectChanges();
-    //   });
-    // });
-  }
+  constructor(public articleService: ArticleService) {}
 
   ngOnInit(): void {}
 
