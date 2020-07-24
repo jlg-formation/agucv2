@@ -3,5 +3,14 @@ form {
 }
 
 button {
+  position: relative;
   margin-top: 2em;
+}
+
+fa-icon {
+  position: absolute;
+  top: 0;
+  right: 3em;
+  padding: 0.5em 1em;
+  color: white;
 }

@@ -34,7 +34,10 @@
       <input type="number" min="0" formControlName="qty" />
       <div class="error"></div>
     </label>
-    <button [disabled]="f.invalid" class="primary">Créer</button>
+    <button [disabled]="f.invalid" class="primary">
+      <span>Créer</span>
+      <fa-icon *ngIf="loading" [icon]="faSpinner" [spin]="true"></fa-icon>
+    </button>
   </form>
 </main>
 <!-- {{ f.controls["name"].errors | json }} -->
