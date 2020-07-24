@@ -75,6 +75,7 @@ const articleReducer = createReducer(
     removeArticleFailure,
     (state, props) => {
       console.log(props.type);
+      saveArticles(state.collectionBefore);
       return {
         ...state,
         error: 'oh zut... erreur technique ;)',
@@ -89,6 +90,7 @@ const articleReducer = createReducer(
     removeArticleSuccess,
     (state, props) => {
       console.log(props.type);
+      saveArticles(props.data);
       return {
         ...state,
         collection: props.data,
