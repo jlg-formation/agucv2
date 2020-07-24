@@ -17,18 +17,34 @@ import {
   removeArticle,
   removeArticleFailure,
   removeArticleSuccess,
+  ArticleActionType,
 } from '../actions/article.actions';
 import { environment } from '../../environments/environment';
 import { Article } from '../interfaces/article';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface ArticleState {
   collection: Article[];
+  collectionBefore: Article[];
   error: string;
   loading: boolean;
 }
 
+const getArticles = (): Article[] => {
+  const str = localStorage.getItem('articles');
+  if (!str) {
+    return [];
+  }
+  return JSON.parse(str);
+};
+
+const saveArticles = (articles: Article[]) => {
+  localStorage.setItem('articles', JSON.stringify(articles));
+};
+
 const initialArticleState: ArticleState = {
-  collection: [{ name: 'Tondeuse à gazon', price: 340, qty: 5 }],
+  collection: getArticles(),
+  collectionBefore: [],
   error: '',
   loading: false,
 };
@@ -37,10 +53,20 @@ const articleReducer = createReducer(
   initialArticleState,
   on(loadArticles, addArticle, removeArticle, (state, props) => {
     console.log(props.type);
+    let articles = [...state.collection];
+    if (props.type === ArticleActionType.ADD) {
+      articles.push(props.data);
+    }
+    if (props.type === ArticleActionType.REMOVE) {
+      articles = articles.filter((a) => !props.data.includes(a.id as string));
+    }
+    saveArticles(articles);
     return {
       ...state,
       error: '',
       loading: true,
+      collectionBefore: state.collection,
+      collection: articles,
     };
   }),
   on(
@@ -53,6 +79,7 @@ const articleReducer = createReducer(
         ...state,
         error: 'oh zut... erreur technique ;)',
         loading: false,
+        collection: state.collectionBefore,
       };
     }
   ),
@@ -65,6 +92,7 @@ const articleReducer = createReducer(
       return {
         ...state,
         collection: props.data,
+        collectionBefore: state.collection,
         error: '',
         loading: false,
       };

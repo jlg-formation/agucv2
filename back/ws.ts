@@ -37,6 +37,10 @@ app.use(express.json());
 
 app.post("/articles", (req, res) => {
   const article = req.body;
+  if (article.name === "Erreur") {
+    res.status(500).end();
+    return;
+  }
   article.id =
     "a" + (1 + Math.max(0, ...articles$.value.map((a) => +a.id.substring(1))));
   articles$.next([...articles$.value, article]);
